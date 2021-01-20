@@ -27,22 +27,21 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		m_CurrentSzeneIndex = 0; 
+		m_CurrentSzeneIndex = 1; 
     }
 
 	//StartButton clicked
 	public void LoadSzene()
 	{
-		if (m_CurrentSzeneIndex < 3)
+		if (m_CurrentSzeneIndex < 4)
 		{
 			//set new map active
 			SceneManager.LoadScene(m_CurrentSzeneIndex);
+			m_CurrentSzeneIndex++;
 		}
         else
         {
 			print("GameManager: No more Scenes available"); 
         }
-		//go on
-		m_CurrentSzeneIndex++;
 	}
 }

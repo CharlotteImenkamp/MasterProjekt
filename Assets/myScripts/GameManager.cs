@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 	//StartButton clicked
 	public void LoadSzene()
 	{
-		if (m_CurrentSzeneIndex < 4)
+		if (m_CurrentSzeneIndex < 5)
 		{
 			//set new map active
 			SceneManager.LoadScene(m_CurrentSzeneIndex);

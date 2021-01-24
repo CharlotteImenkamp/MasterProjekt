@@ -6,17 +6,15 @@ public class ButtonHandler : MonoBehaviour
 {
 	public Button m_StartButton;
 	public Button m_OkButton;
-	public Text m_TutorialText; 
 
 
 	void Start()
 	{
 		Button btn_start = m_StartButton.GetComponent<Button>();
-		Button btn_ok = m_OkButton.GetComponent<Button>();
-		m_TutorialText = gameObject.GetComponent<Text>(); 
+		//Button btn_ok = m_OkButton.GetComponent<Button>();
 
 		btn_start.onClick.AddListener(Click_Start);
-		btn_ok.onClick.AddListener(Click_Ok);
+		//btn_ok.onClick.AddListener(Click_Ok);
 
 		//btn_start.enabled = false; 
 	}
@@ -42,9 +40,9 @@ public class ButtonHandler : MonoBehaviour
 		}
 
 		// Ok
-		if (Input.GetKey("o"))
+		if (Input.GetKey("m"))
 		{
-			m_TutorialText.Text = "Zweiter Text"; 
+			GameManager.Instance.LoadSzene();
 		}
 
 	}

@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; set; }
+	public AudioSource m_audioSource;
+	public bool m_playMusic; 
 
-	public int m_CurrentSzeneIndex; 
+	private int m_CurrentSzeneIndex;
+
 
 	// Awake Singelton
 	private void Awake()
@@ -27,7 +30,12 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		m_CurrentSzeneIndex = 1; 
+		m_CurrentSzeneIndex = 1;
+
+		if (m_playMusic)
+		{
+			m_audioSource.Play();
+		}
     }
 
 	//StartButton clicked

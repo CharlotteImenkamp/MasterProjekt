@@ -22,9 +22,9 @@ public class CalibrateLines : MonoBehaviour
     void Calibrate()
     {
         //calibrate image position for 3s //\todo 
-        if (Time.time < 10.0)
+        if (Time.time < 30.0)
         {
-            m_ConfigPoint.transform.position = new Vector3(m_HandJoint.transform.position.x, m_ConfigPoint.transform.position.y, m_HandJoint.transform.position.z);
+            m_ConfigPoint.transform.position = new Vector3(m_ConfigPoint.transform.position.x, m_ConfigPoint.transform.position.y, m_HandJoint.transform.position.z);
         }
     }
 }

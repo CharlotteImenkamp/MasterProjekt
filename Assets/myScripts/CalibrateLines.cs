@@ -11,7 +11,9 @@ public class CalibrateLines : MonoBehaviour
 
     void Start()
     {
-   
+        //var hand = Hands.Get(Chirality.Right);
+        //Vector3 indexPosition; 
+
     }
 
     void Update()
@@ -22,9 +24,12 @@ public class CalibrateLines : MonoBehaviour
     void Calibrate()
     {
         //calibrate image position for 3s //\todo 
+
+         
         if (Time.time < 30.0)
         {
-            m_ConfigPoint.transform.position = new Vector3(m_ConfigPoint.transform.position.x, m_ConfigPoint.transform.position.y, m_HandJoint.transform.position.z);
+            //indexPosition = hand.Fingers[1].TipPosition.ToVector3();
+            //m_ConfigPoint.transform.position = new Vector3(m_ConfigPoint.transform.position.x, m_ConfigPoint.transform.position.y, indexPosition.transform.position.z);
         }
     }
 }

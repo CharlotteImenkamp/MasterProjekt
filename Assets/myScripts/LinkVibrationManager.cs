@@ -1,6 +1,8 @@
 ﻿using LinkVibrationController;
 using UnityEngine;
 
+// https://developer-archive.leapmotion.com/documentation/v2/unity/unity/Unity_DetectionUtilities.html
+
 public class LinkVibrationManager : LinkVibration
 {
     

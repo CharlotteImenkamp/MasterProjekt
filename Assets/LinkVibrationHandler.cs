@@ -16,6 +16,6 @@ public class LinkVibrationHandler : LinkVibrationManager
 
     void Update()
     {
-        controller.VibrateShort(1); 
+        // controller.VibrateShort(1); 
     }
 }

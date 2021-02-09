@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance { get; set; }
 	public AudioSource m_audioSource;
 	public bool m_playMusic;
+	public bool m_startText; 
 	public Vector3 idxFingerLeftPos;
 	public Vector3 idxFingerRightPos;
 	public Hand leftHand;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 		{
 			m_audioSource.Play();
 		}
+		m_startText = false; 
 
 		// Hand Tracking
 		controller = new Controller();
@@ -74,11 +76,15 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+		/*
 		bool bSuccess = UpdateHandPosition(); 
 		if (bSuccess)
 		{
-			//UpdateIndexFingerPosition();
-		}
+			UpdateIndexFingerPosition();
+		}*/
+
+		// Starte Anfangstext
+		m_startText = true; 
     }
 
 
@@ -87,8 +93,8 @@ public class GameManager : MonoBehaviour
 	{
 		bool bSuccess = false; 
 
-		//leftHand = null;
-		//rightHand = null;
+		leftHand = null;
+		rightHand = null;
 
 		frame = controller.Frame();
 		var hands = frame.Hands;
@@ -120,47 +126,36 @@ public class GameManager : MonoBehaviour
 		{
 			//Debug.Log("GameManager::UpdateHandPosition >> No hand found");
 		}
-/////////////////////////////
-		
-		if(rightHand != null )
-        {
-			foreach(Finger finger in rightHand.Fingers)
-            {
-				if(finger.Type == Finger.FingerType.TYPE_INDEX)
-                {
-					idxFingerRightPos = finger.TipPosition.ToVector3();
-					Debug.Log("GameManager::UpdateIndexFingerPosition >> z Position right: " + idxFingerRightPos.ToString());
-				}
-            }
-		}
 
-		if(leftHand != null)
-        {
-			idxFingerRightPos = rightHand.Finger(1).TipPosition.ToVector3();
-			Debug.Log("GameManager::UpdateIndexFingerPosition >> z Position left:" + idxFingerRightPos.z.ToString());
-		}
-
-
-
-		//////////////////////////////////
 
 		return bSuccess; 
 	}
 
 	private void UpdateIndexFingerPosition()
     {
-		idxFingerLeftPos = Vector3.zero;
-		idxFingerRightPos = Vector3.zero;
 
-		idxFingerLeftPos = leftHand.Finger(1).TipPosition.ToVector3();
-		idxFingerRightPos = rightHand.Finger(1).TipPosition.ToVector3();
+		if (rightHand != null)
+		{
+			foreach (Finger finger in rightHand.Fingers)
+			{
+				if (finger.Type == Finger.FingerType.TYPE_INDEX)
+				{
+					idxFingerRightPos = finger.TipPosition.ToVector3();
+					Debug.Log("GameManager::UpdateIndexFingerPosition >> z Position right: " + idxFingerRightPos.ToString());
+				}
+			}
+		}
 
-		Debug.Log("GameManager::UpdateIndexFingerPosition >> z Position right:"+ idxFingerRightPos.z.ToString());
-
-
-		if (idxFingerLeftPos== Vector3.zero || idxFingerRightPos == Vector3.zero)
-        {
-			Debug.Log("GameManager::UpdateIndexFingerPosition >> Fingers not located correct");
+		if (leftHand != null)
+		{
+			foreach (Finger finger in rightHand.Fingers)
+			{
+				if (finger.Type == Finger.FingerType.TYPE_INDEX)
+				{
+					idxFingerRightPos = finger.TipPosition.ToVector3();
+					Debug.Log("GameManager::UpdateIndexFingerPosition >> z Position right: " + idxFingerRightPos.ToString());
+				}
+			}
 		}
 	}
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    public GameObject blockGameObject; 
+    private List<Transform> m_ArrTransformations;
+    private GameObject[] m_ArrGameObjects; 
 
 // START
     void Start()
@@ -12,10 +13,15 @@ public class BlockManager : MonoBehaviour
     // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Blocks_OnTaskChangedHandler;
 
-    // GET BLOCKS
-        
-    // GET TRANSFORMATIONS
+        // GET BLOCKS
+        m_ArrGameObjects = GameObject.FindGameObjectsWithTag("Block");
 
+        // GET TRANSFORMATIONS
+        m_ArrTransformations = new List<Transform>(); 
+        foreach(GameObject obj in m_ArrGameObjects)
+        {
+            m_ArrTransformations.Add(obj.transform);
+        }
     }
 
 
@@ -33,9 +39,15 @@ public class BlockManager : MonoBehaviour
     }
 
 // RESET
-    void Reset_Blocks()
+    public void Reset_Blocks()
     {
-        //\do stuff
+        Debug.Log("BlockManager::Reset_Blocks"); 
+
+        for (int i = 0; i < m_ArrGameObjects.Length; i++)
+        {
+            m_ArrGameObjects[i].transform.localPosition = m_ArrTransformations[i].localPosition;
+            m_ArrGameObjects[i].transform.localRotation = m_ArrTransformations[i].localRotation;
+        }
     }
 
 }

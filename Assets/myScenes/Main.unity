@@ -659,7 +659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &158971334
 Transform:
   m_ObjectHideFlags: 0
@@ -4652,7 +4652,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &838132612
 PrefabInstance:
@@ -5571,7 +5571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 5985180461990066557}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -5599,7 +5599,18 @@ MonoBehaviour:
       m_Calls: []
   _OnUnpress:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1487788750}
+        m_MethodName: Reset_Blocks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &1082496770
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6698,7 +6709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1286101323
 Transform:
   m_ObjectHideFlags: 0
@@ -8881,6 +8892,49 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 696588982}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1487788749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1487788751}
+  - component: {fileID: 1487788750}
+  m_Layer: 0
+  m_Name: BlockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1487788750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487788749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a2d7bcac5469c4b9445ef0ee87657d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1487788751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487788749}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -45.281322, y: 4.087876, z: -87.96315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1488534673 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6000408870599531565, guid: 22947467a1475eb47baa3563f1fa6e62,
@@ -10371,7 +10425,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1754942623
 GameObject:
@@ -10807,7 +10861,7 @@ PrefabInstance:
     - target: {fileID: 7184857758136103103, guid: 9aab66f36c033fa48a3141ea8315dc94,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7184857758136103103, guid: 9aab66f36c033fa48a3141ea8315dc94,
         type: 3}
@@ -18262,6 +18316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18623,6 +18682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18739,6 +18803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Block (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
@@ -19065,6 +19134,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19277,7 +19351,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
         type: 3}
       propertyPath: m_Name
-      value: dreieck1
+      value: dreieck0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01e312b778411140a1591f7a9b72ac0, type: 3}
@@ -19312,6 +19391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Block (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
@@ -20495,7 +20579,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
         type: 3}
       propertyPath: m_Name
-      value: dreieck1
+      value: dreieck4
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01e312b778411140a1591f7a9b72ac0, type: 3}
@@ -20616,7 +20705,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
         type: 3}
       propertyPath: m_Name
-      value: dreieck1
+      value: dreieck3
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01e312b778411140a1591f7a9b72ac0, type: 3}
@@ -20713,6 +20807,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cylinder
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093462020135877861, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 8958934045049152652, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
         type: 3}
@@ -21311,6 +21410,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21509,6 +21613,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21654,6 +21763,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cylinder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093462020135877861, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 8958934045049152652, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
         type: 3}
@@ -22416,6 +22530,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: dreieck1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01e312b778411140a1591f7a9b72ac0, type: 3}
@@ -23535,6 +23654,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23672,6 +23796,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23775,6 +23904,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Block (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449575856672861408, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 6449575856672861409, guid: 59f2b1ca318f3784ca1b4f9cadff9eb4,
         type: 3}
@@ -24095,7 +24229,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
         type: 3}
       propertyPath: m_Name
-      value: dreieck1
+      value: dreieck2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c01e312b778411140a1591f7a9b72ac0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01e312b778411140a1591f7a9b72ac0, type: 3}
@@ -24213,6 +24352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cylinder (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093462020135877861, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 8958934045049152652, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
         type: 3}
@@ -24480,6 +24624,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cylinder (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093462020135877861, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 9025185384293174234, guid: 8d4d0c04f7f78944fb9236f499bb02ac,
         type: 3}

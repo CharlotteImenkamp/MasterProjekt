@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
 	// NO TASK RUNNING
 
-		throw new NotImplementedException();
+		// throw new NotImplementedException();
     }
 
     // UPDATE

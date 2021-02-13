@@ -2,31 +2,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Leap;
 using Leap.Unity;
 
 
 public class GameManager : MonoBehaviour
 {
-	public static GameManager Instance { get; set; }
-	public AudioSource m_audioSource;
+// PARAMETERS
+    public static GameManager Instance { get; set; }
+
+	// EVENTHANDLING
+	private gameState m_state;
+	public gameState state{
+		get { return m_state; }
+		set {
+			m_state = value;
+			OnTaskChanged(m_state); }
+		}
+	public delegate void OnTaskChangedDelegate(gameState newState);
+	public event OnTaskChangedDelegate OnTaskChanged;
+
+	// TEXT
+	public bool m_startText;
+
+	// MUSIK
 	public bool m_playMusic;
-	public bool m_startText; 
+	public AudioSource m_audioSource;
+
+	// HANDTRACKING
 	public Vector3 idxFingerLeftPos;
 	public Vector3 idxFingerRightPos;
 	public Hand leftHand;
 	public Hand rightHand;
-
-	#region Private Members
-
-	private int m_CurrentSzeneIndex;
 	private Controller controller;
 	private Frame frame;
 
-    #endregion
-
-    // Awake Singelton
+    // SINGELTON
     private void Awake()
 	{
 		if (Instance == null)
@@ -40,18 +51,22 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Start is called before the first frame update
+// START
 	void Start()
     {
-		m_CurrentSzeneIndex = 1;
+    // EVENTHANDLING
+        OnTaskChanged += OnTaskChangedHandler;
 
+	// MUSIK
 		if (m_playMusic)
 		{
 			m_audioSource.Play();
 		}
+
+	// TEXT
 		m_startText = false; 
 
-		// Hand Tracking
+	// HANDTRACKING
 		controller = new Controller();
 		idxFingerLeftPos = Vector3.one;
 		idxFingerRightPos = Vector3.one;
@@ -59,23 +74,27 @@ public class GameManager : MonoBehaviour
 		rightHand = null; 
 	}
 
-	//StartButton clicked
-	public void LoadSzene()
-	{
-		if (m_CurrentSzeneIndex < 5)
-		{
-			//set new map active
-			SceneManager.LoadScene(m_CurrentSzeneIndex);
-			m_CurrentSzeneIndex++;
-		}
-        else
-        {
-			print("GameManager: No more Scenes available"); 
-        }
-	}
+	// EVENTHANDLING
+    private void OnTaskChangedHandler(gameState newState)
+    {
+		Debug.Log("GameManager::TaskChanged");				// \todo: do stuff
 
+	// TASK RUNNING
+		// VibrationManager		active 
+	
+	// TASK SWITCHING
+		// Canvas Manager		active
+		// Hand Position wechseln 
+
+	// NO TASK RUNNING
+
+		throw new NotImplementedException();
+    }
+
+    // UPDATE
     public void Update()
     {
+	// HANDTRACKING
 		/*
 		bool bSuccess = UpdateHandPosition(); 
 		if (bSuccess)
@@ -83,7 +102,7 @@ public class GameManager : MonoBehaviour
 			UpdateIndexFingerPosition();
 		}*/
 
-		// Starte Anfangstext
+	// TEXT
 		m_startText = true; 
     }
 
@@ -131,11 +150,24 @@ public class GameManager : MonoBehaviour
 		return bSuccess; 
 	}
 
+	private bool CheckThumbsup()
+    {
+		Vector3 thumbDir = leftHand.GetThumb().Direction.ToVector3(); 
+
+		if(Vector3.up == thumbDir)
+        {
+
+        }
+
+		return true; 
+    }
+
 	private void UpdateIndexFingerPosition()
     {
 
 		if (rightHand != null)
 		{
+			rightHand.GetIndex(); 
 			foreach (Finger finger in rightHand.Fingers)
 			{
 				if (finger.Type == Finger.FingerType.TYPE_INDEX)

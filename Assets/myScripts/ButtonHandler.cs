@@ -1,83 +1,83 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic; 
 using TMPro;
 using System.Collections;
 
 public class ButtonHandler : MonoBehaviour
 {
-	// public 
-	// public Button m_StartButton;
-	//  public Button m_OkButton;
 
-	// public TextMeshProUGUI[] m_textGUIArray;
-	public float m_displayTime = 3; 
-
-	// private
-
-	private TextMeshProUGUI[] m_textArr = null;
-	private int m_arrayIndex;
+	// TEXT
+	private List<Text> m_textArr = null;
+	public  List<GameObject> m_textObject;
+	// private int m_arrayIndex;
 	private bool m_stop;
-	private float m_timer; 
 
+	// BUTTONS
+	private List<Button> buttonsInGame; 
+
+
+// START
 	void Start()
 	{
-		/* 
-		// assign buttons
-		m_StartButton = m_StartButton.gameObject.GetComponent<Button>();
-		m_OkButton = m_OkButton.gameObject.GetComponent<Button>();
+    // EVENTHANDLING
+        GameManager.Instance.OnTaskChanged += Button_OnTaskChangedHandler;
 
-		m_StartButton.onClick.AddListener(() =>
+	// FIND BUTTONS
+		GameObject[] btn = GameObject.FindGameObjectsWithTag("Button");
+		foreach(GameObject obj in btn)
         {
-            GameManager.Instance.LoadSzene();
-			print("Start Button was pressed");
-		});
+			buttonsInGame.Add(obj.GetComponent<Button>());
+        }
+		Debug.Log(buttonsInGame.ToString()); 
+		 
 
-		m_OkButton.onClick.AddListener(() => 
-		{
-			_ManageVisibility();
-			print("Okay Button was pressed");
-		});
+		// assign buttons
+		/* m_StartButton = m_StartButton.gameObject.GetComponent<Button>();
+		m_StartButton.onClick.AddListener(() =>
+        {}); */
 
 		// assign texts
-		m_textArr = new TextMeshProUGUI[m_textGUIArray.Length];
-        for (int i = 0; i < m_textGUIArray.Length; i++)
+        foreach(GameObject obj in m_textObject)
         {
-			m_textArr.SetValue(m_textGUIArray[i].GetComponent<TextMeshProUGUI>(), i);
+			m_textArr.Add(obj.GetComponent<Text>()); 
 		}
 
-		m_arrayIndex = 0;
-		_ManageVisibility();
-		*/
+		// m_arrayIndex = 0;
+		// _ManageVisibility();
+		
 	}
 
+// EVENTHANDLING
+	private void Button_OnTaskChangedHandler(gameState newState)
+    {
+	// TASK RUNNING
+		// ButtonHandler Numbers inactive
+		// ButtonHandler Game	 active
 
+	// TASK SWITCHING
+		// ButtonHandler Numbers inactive
+		// ButtonHandler Game	 inactive
 
-	// workaround without VR
+	// NO TASK RUNNING
+		// ButtonHandler Numbers active 
+		// ButtonHandler Game	 inactive
+
+		throw new System.NotImplementedException();
+    }
+
+// UPDATE
 	void Update()
 	{
-		m_timer += Time.deltaTime; 
-		// Load Szene
-		if (Input.GetKey("n"))
+
+		// *****Workaround
+		if (!m_stop)
 		{
-			print("Start Key 'n' was pressed"); 
-			GameManager.Instance.LoadSzene();
+			//_ManageVisibility();
 		}
-
-		/*
-		if (m_timer >= m_displayTime && !m_stop)
-		{
-			_ManageVisibility();
-			m_timer = 0.0f; 
-		}*/
 	}
 
-
-	public void ButtonPressed()
-	{
-		print("Start Button was pressed");
-	}
-
-
+	/*
 	void _ManageVisibility()
 	{
 		if (m_arrayIndex < m_textArr.Length)
@@ -96,5 +96,5 @@ public class ButtonHandler : MonoBehaviour
 			m_stop = true;
 			print("ButtonHandler::ManageVisibility >> No more text to show.");
 		}
-	}
+	}*/
 }

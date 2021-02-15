@@ -5,14 +5,17 @@ using UnityEngine;
 public class OffsetManager : MonoBehaviour
 {
     public GameObject Canvas;
-    // public GameObject Hands; 
+    public GameObject m_handmodel;
+
+
 
     void Start()
     {
+    // CANVAS
         Canvas.SetActive(false);
-        // Hands.SetActive(true); 
-
-        // EVENTHANDLING
+        m_handmodel.SetActive(true); 
+        
+    // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Canvas_OnTaskChangedHandler;
 
     }
@@ -23,12 +26,12 @@ public class OffsetManager : MonoBehaviour
         if(newState == gameState.taskSwitching)
         {
             Canvas.SetActive(true);
-            // Hands.SetActive(false); 
+            m_handmodel.SetActive(false); 
         }
         else
         {
             Canvas.SetActive(false);
-            // Hands.SetActive(true); 
+            m_handmodel.SetActive(true);
         }
     }
 }

@@ -29,6 +29,7 @@ public class TextManager : MonoBehaviour
     { 
         if(newState == gameState.taskRunning)
         {
+            deactivateExept(m_ArrTextObjects, null); 
             if(GameManager.Instance.m_TaskIndex < m_ArrImageObjects.Length)
             {
                 deactivateExept(m_ArrImageObjects, m_ArrImageObjects[GameManager.Instance.m_TaskIndex]); 
@@ -46,18 +47,56 @@ public class TextManager : MonoBehaviour
     {
         if(GameManager.Instance.state == gameState.introduction)
         {
-            if (m_textIndex < m_ArrTextObjects.Length)
+            if (m_textIndex < m_ArrTextObjects.Length && m_textIndex > -1)
             {
                 deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]); 
                 m_textIndex++;
             }
+            else if(m_textIndex >= m_ArrTextObjects.Length)
+            {
+                m_textIndex = m_ArrTextObjects.Length - 1;
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
+            else if(m_textIndex <= -1)
+            {
+                m_textIndex = 0;
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
             else
             {
-                deactivateExept(m_ArrTextObjects, null); 
-
-                Debug.Log("TextManager:: activateNextTextElement >> No more text to show.");
+                Debug.LogError("TextManager:: activateNextTextElement");
             }
         } 
+    }
+
+    public void activatePreviousTextElement()
+    {
+        if (GameManager.Instance.state == gameState.introduction)
+        {
+            if (m_textIndex < m_ArrTextObjects.Length && m_textIndex >= 1)
+            {
+                m_textIndex--;
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
+            else if(m_textIndex >= m_ArrTextObjects.Length)
+            {
+                m_textIndex = m_ArrTextObjects.Length - 1;
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
+            else if(m_textIndex == 0)
+            {
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
+            else if(m_textIndex <= -1)
+            {
+                m_textIndex = 0; 
+                deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_textIndex]);
+            }
+            else
+            {
+                Debug.LogError("TextManager:: activatePreviousTextElement");
+            }
+        }
     }
 
 //  HELPER FKT

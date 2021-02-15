@@ -20,11 +20,15 @@ public class ButtonManager : MonoBehaviour
 
 	private GameObject[] m_ArrButtons; 
 
+// BUTTONS
+	public GameObject Button_Abfrage;
+	public float m_minimal_Playtime = 2.0f; 
 
 	// START
 	void Start()
 	{
-		m_ArrButtons = new GameObject[]{ Buttons_Numbers, Buttons_InGame, Buttons_Introduction, Buttons_Comparision}; 
+	// Buttonarray
+		m_ArrButtons = new GameObject[] { Buttons_Comparision, Buttons_InGame, Buttons_Introduction, Buttons_Numbers }; 
 
     // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Button_OnTaskChangedHandler;
@@ -35,7 +39,6 @@ public class ButtonManager : MonoBehaviour
 
 	// Visibility
 		deactivateExept(Buttons_Introduction); 
-
 	}
 
 
@@ -44,7 +47,9 @@ public class ButtonManager : MonoBehaviour
     {
 		if(newState == gameState.taskRunning)
         {
-			deactivateExept(Buttons_InGame); 
+			deactivateExept(Buttons_InGame);
+			Button_Abfrage.SetActive(false);
+			Invoke("activateAbfrageButton", m_minimal_Playtime); 
 		}
 
 		if (newState == gameState.taskSwitching)
@@ -57,6 +62,11 @@ public class ButtonManager : MonoBehaviour
 			deactivateExept(Buttons_Numbers); 
 		}
 	}
+
+	private void activateAbfrageButton()
+    {
+		Button_Abfrage.SetActive(true); 
+    }
 
 	public void saveChoise(GameObject obj)
     {

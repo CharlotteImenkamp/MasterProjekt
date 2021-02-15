@@ -7,6 +7,10 @@ TagManager:
   - Interactable
   - Button
   - Block
+  - UIText
+  - UINumber
+  - UISign
+  - UIImage
   layers:
   - Default
   - TransparentFX

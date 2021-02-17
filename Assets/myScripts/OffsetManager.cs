@@ -6,9 +6,10 @@ using Leap.Unity;
 
 public class OffsetManager : MonoBehaviour
 {
-    public GameObject Canvas;
-    public GameObject m_handmodel;
-	public float offset = 5.0f;
+	public GameObject Canvas;
+	public GameObject m_handmodel;
+
+	public float m_offset; 
 
 	// HANDTRACKING
 	public Hand leftHand;
@@ -39,23 +40,24 @@ public class OffsetManager : MonoBehaviour
 		frame = controller.Frame();
 		hands = frame.Hands;
 		UpdateHandPosition();
-		if (rightHand != null)
-		{
-			Vector3 newPosition = rightHand.PalmPosition.ToVector3() + Vector3.right * offset;
+
+        if (rightHand != null)
+        {
+            Vector3 newPosition = new Vector3(5, 5, 5);  //rightHand.PalmPosition.ToVector3() + Vector3.right * m_offset;
 			Quaternion newRotation = rightHand.Rotation.ToQuaternion();
-			rightHand.SetTransform(newPosition, newRotation);
-		}
-		if (leftHand != null)
-		{
-			Vector3 newPosition = leftHand.PalmPosition.ToVector3() + Vector3.right * offset;
-			Quaternion newRotation = leftHand.Rotation.ToQuaternion();
-			leftHand.SetTransform(newPosition, newRotation);
-		}
-		//Debug.Log("Right Hand" + rightHand.GetPinchPosition().ToString()); 
+            rightHand.SetTransform(newPosition, newRotation);
+        }
+        if (leftHand != null)
+        {
+			Vector3 newPosition = new Vector3( 5, 5, 5 );  //leftHand.PalmPosition.ToVector3() + Vector3.right * m_offset;
+            Quaternion newRotation = leftHand.Rotation.ToQuaternion();
+            leftHand.SetTransform(newPosition, newRotation);
+        }
+        //Debug.Log("Right Hand" + rightHand.GetPinchPosition().ToString()); 
     }
 
 // EVENTHANDLING
-    private void Canvas_OnTaskChangedHandler(gameState newState)
+	private void Canvas_OnTaskChangedHandler(gameState newState)
     {
         if(newState == gameState.taskSwitching)
         {
@@ -82,12 +84,12 @@ public class OffsetManager : MonoBehaviour
 				if (hand.IsLeft)
 				{
 					leftHand = hand;
-					Debug.Log("GameManager::UpdateHandPosition >> Left hand found");
+					// Debug.Log("GameManager::UpdateHandPosition >> Left hand found");
 				}
 				else if (hand.IsRight)
 				{
 					rightHand = hand;
-					Debug.Log("GameManager::UpdateHandPosition >> Right hand found");
+					// Debug.Log("GameManager::UpdateHandPosition >> Right hand found");
 				}
 				else
 				{

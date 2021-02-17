@@ -50,8 +50,6 @@ public class BlockManager : MonoBehaviour
         {
             m_ArrGameObjects[i].transform.position = m_ArrPositions[i];
             m_ArrGameObjects[i].transform.rotation = m_ArrRotations[i]; 
-            // m_ArrGameObjects[i].transform.position = m_ArrTransformations[i].position;
-            // m_ArrGameObjects[i].transform.localRotation = m_ArrTransformations[i].localRotation;
         }
     }
 

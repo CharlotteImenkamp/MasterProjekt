@@ -101,26 +101,40 @@ namespace Leap.Unity {
     public override void UpdateHand() {
       if (palm != null) {
         if (modelPalmAtLeapWrist) {
-          palm.position = GetWristPosition();
-        }
+                    // wrist joint position
+                    // palm.position = GetWristPosition();                   //**
+                    /////////////////////////////////////////////////////////////// NEU CI
+                    float offset = 1.0f; 
+                    palm.position = GetWristPosition() + Vector3.forward * offset; 
+                    ///////////////////////////////////////////////////////////////
+                }
         else {
-          palm.position = GetPalmPosition();
-          if (wristJoint) {
-            wristJoint.position = GetWristPosition();
-          }
-        }
+          // palm position
+          palm.position = GetPalmPosition();                    //**
+                    if (wristJoint) {
+                        // wrist joint position
+                        // wristJoint.position = GetWristPosition();           //**
+                        /////////////////////////////////////////////////////////////// NEU CI
+                        float offset = 1.0f;
+                        wristJoint.position = GetWristPosition() + Vector3.forward * offset;
+                        ///////////////////////////////////////////////////////////////
+                    }
+                }
+        // palm rotation
         palm.rotation = getRiggedPalmRotation() * userBoneRotation;
       }
 
+      // forearm rotation
       if (forearm != null) {
         forearm.rotation = GetArmRotation() * userBoneRotation;
       }
 
+      // update finger **
       for (int i = 0; i < fingers.Length; ++i) {
         if (fingers[i] != null) {
           fingers[i].fingerType = (Finger.FingerType)i;
-          fingers[i].UpdateFinger();
-        }
+          fingers[i].UpdateFinger();                            //**
+                }
       }
     }
 

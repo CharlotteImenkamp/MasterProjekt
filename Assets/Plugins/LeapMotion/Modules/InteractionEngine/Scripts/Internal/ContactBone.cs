@@ -223,7 +223,6 @@ namespace Leap.Unity.Interaction {
         interactionController.NotifySoftContactCollisionExit(this, interactionObj, collider);
       }
     }
-
   }
 
 }

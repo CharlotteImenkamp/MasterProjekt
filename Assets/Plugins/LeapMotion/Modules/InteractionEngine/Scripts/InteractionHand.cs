@@ -247,7 +247,8 @@ namespace Leap.Unity.Interaction {
     /// Gets the last-tracked position of the underlying Leap hand.
     /// </summary>
     public override Vector3 position {
-      get { return _handData.PalmPosition.ToVector3(); }
+      get { return _handData.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI 
+            }
     }
 
     /// <summary>
@@ -289,7 +290,7 @@ namespace Leap.Unity.Interaction {
       if (manager.hasMovingFrameOfReference) {
         Vector3 transformAheadPosition;
         Quaternion transformAheadRotation;
-        manager.TransformAheadByFixedUpdate(_unwarpedHandData.PalmPosition.ToVector3(),
+        manager.TransformAheadByFixedUpdate(_unwarpedHandData.PalmPosition.ToVector3() + newPosition, ////////////////////////////////////////////////////////////////////////////CI,
                                             _unwarpedHandData.Rotation.ToQuaternion(),
                                             out transformAheadPosition,
                                             out transformAheadRotation);
@@ -305,11 +306,11 @@ namespace Leap.Unity.Interaction {
     public override Vector3 hoverPoint {
       get {
         if (_backingHoverPointTransform == null) {
-          return leapHand.PalmPosition.ToVector3();
-        }
+          return leapHand.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+                }
         else {
-          return _backingHoverPointTransform.position;
-        }
+          return _backingHoverPointTransform.position + newPosition; ////////////////////////////////////////////////////////////////////////////CI                                                            // ***
+                }
       }
     }
 
@@ -317,8 +318,8 @@ namespace Leap.Unity.Interaction {
     private List<Transform> _fingertipTransforms = new List<Transform>();
     protected override List<Transform> _primaryHoverPoints {
       get {
-        return _fingertipTransforms;
-      }
+        return _fingertipTransforms;                                                             // ***
+            }
     }
 
     private void refreshPointDataFromHand() {
@@ -328,8 +329,8 @@ namespace Leap.Unity.Interaction {
     }
 
     private void refreshHoverPoint() {
-      _backingHoverPointTransform.position = leapHand.PalmPosition.ToVector3();
-      _backingHoverPointTransform.rotation = leapHand.Rotation.ToQuaternion();
+      _backingHoverPointTransform.position = leapHand.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI                                                             // ***
+            _backingHoverPointTransform.rotation = leapHand.Rotation.ToQuaternion();
     }
 
     private void refreshPrimaryHoverPoints() {
@@ -338,8 +339,8 @@ namespace Leap.Unity.Interaction {
           _fingertipTransforms[i] = _backingFingertipTransforms[i];
 
           Finger finger = leapHand.Fingers[i];
-          _fingertipTransforms[i].position = finger.TipPosition.ToVector3();
-          _fingertipTransforms[i].rotation = finger.bones[3].Rotation.ToQuaternion();
+          _fingertipTransforms[i].position = finger.TipPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+                    _fingertipTransforms[i].rotation = finger.bones[3].Rotation.ToQuaternion();
         }
         else {
           _fingertipTransforms[i] = null;
@@ -352,7 +353,7 @@ namespace Leap.Unity.Interaction {
       // Extension method calculates "unwarped" pose in world space.
       Vector3    unwarpedPosition;
       Quaternion unwarpedRotation;
-      warpedSpaceElement.anchor.transformer.WorldSpaceUnwarp(primaryHoverPoint.position, 
+      warpedSpaceElement.anchor.transformer.WorldSpaceUnwarp(primaryHoverPoint.position + newPosition, ////////////////////////////////////////////////////////////////////////////CI, 
                                                              primaryHoverPoint.rotation,
                                                              out unwarpedPosition,
                                                              out unwarpedRotation);
@@ -360,9 +361,11 @@ namespace Leap.Unity.Interaction {
       // First shift the hand to be centered on the fingertip position so that rotations
       // applied to the hand will pivot around the fingertip, then apply the rest of the
       // transformation.
-      _unwarpedHandData.Transform(-primaryHoverPoint.position, Quaternion.identity);
-      _unwarpedHandData.Transform(unwarpedPosition, unwarpedRotation
-                                                    * Quaternion.Inverse(primaryHoverPoint.rotation));
+      _unwarpedHandData.Transform(-primaryHoverPoint.position + newPosition ////////////////////////////////////////////////////////////////////////////CI
+            , Quaternion.identity);
+            _unwarpedHandData.Transform(unwarpedPosition + newPosition ////////////////////////////////////////////////////////////////////////////CI
+            , unwarpedRotation
+            * Quaternion.Inverse(primaryHoverPoint.rotation));
 
       // Hand data was modified, so refresh point data.
       refreshPointDataFromHand();
@@ -423,7 +426,12 @@ namespace Leap.Unity.Interaction {
       _contactBoneParent = new GameObject(name);
     }
 
-    private void initContactBones() {
+
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
+        public Vector3 newPosition; 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        private void initContactBones() {
       _contactBones = new ContactBone[NUM_FINGERS * BONES_PER_FINGER + 1];
       _handContactBoneMapFunctions = new BoneMapFunc[NUM_FINGERS * BONES_PER_FINGER + 1];
 
@@ -436,8 +444,13 @@ namespace Leap.Unity.Interaction {
           Bone bone = _unwarpedHandData.Fingers[fingerIndex]
                                        .Bone((Bone.BoneType)(jointIndex) + 1); // +1 to skip first bone.
           int boneArrayIndex = fingerIndex * BONES_PER_FINGER + jointIndex;
-          contactBoneObj.transform.position = bone.Center.ToVector3();
-          contactBoneObj.transform.rotation = bone.Rotation.ToQuaternion();
+                    // contactBoneObj.transform.position = bone.Center.ToVector3(); 
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
+                     contactBoneObj.transform.position = bone.Center.ToVector3()+ newPosition;
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    contactBoneObj.transform.rotation = bone.Rotation.ToQuaternion();
 
           // Remember the method we used to calculate this bone position from
           // a Leap Hand for later.
@@ -447,8 +460,12 @@ namespace Leap.Unity.Interaction {
                                                           out Vector3 targetPosition,
                                                           out Quaternion targetRotation) => {
             Bone theBone = hand.Fingers[fingerIndexCopy].Bone((Bone.BoneType)(jointIndexCopy + 1));
-            targetPosition = theBone.Center.ToVector3();
-            targetRotation = theBone.Rotation.ToQuaternion();
+            // targetPosition = theBone.Center.ToVector3();
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
+                    targetPosition = theBone.Center.ToVector3() + newPosition;
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                              
+                   targetRotation = theBone.Rotation.ToQuaternion();
           };
 
           CapsuleCollider capsule = contactBoneObj.GetComponent<CapsuleCollider>();
@@ -459,9 +476,12 @@ namespace Leap.Unity.Interaction {
 
           ContactBone contactBone = initContactBone(bone, contactBoneObj, boneArrayIndex, capsule);
 
-          contactBone.lastTargetPosition = bone.Center.ToVector3();
-        }
-      }
+          // contactBone.lastTargetPosition = bone.Center.ToVector3();
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
+                    contactBone.lastTargetPosition = bone.Center.ToVector3() + newPosition;
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                }
+            }
 
       // Palm bone
       {
@@ -470,14 +490,14 @@ namespace Leap.Unity.Interaction {
 
         Bone bone = _unwarpedHandData.Fingers[(int)Finger.FingerType.TYPE_MIDDLE].Bone(Bone.BoneType.TYPE_METACARPAL);
         int boneArrayIndex = NUM_FINGERS * BONES_PER_FINGER;
-        contactBoneObj.transform.position = _unwarpedHandData.PalmPosition.ToVector3();
+        contactBoneObj.transform.position = _unwarpedHandData.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
         contactBoneObj.transform.rotation = _unwarpedHandData.Rotation.ToQuaternion();
 
         // Remember the method we used to calculate the palm from a Leap Hand for later.
         _handContactBoneMapFunctions[boneArrayIndex] = (Leap.Hand hand,
                                                         out Vector3 targetPosition,
                                                         out Quaternion targetRotation) => {
-          targetPosition = hand.PalmPosition.ToVector3();
+          targetPosition = hand.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
           targetRotation = hand.Rotation.ToQuaternion();
         };
 
@@ -514,13 +534,13 @@ namespace Leap.Unity.Interaction {
 
       body.mass = 0.1f;
       body.position = bone != null ? bone.Center.ToVector3()
-                                   : _unwarpedHandData.PalmPosition.ToVector3();
-      body.rotation = bone != null ? bone.Rotation.ToQuaternion()
+                                   : _unwarpedHandData.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+            body.rotation = bone != null ? bone.Rotation.ToQuaternion()
                                    : _unwarpedHandData.Rotation.ToQuaternion();
       contactBone.lastTargetPosition = bone != null ? bone.Center.ToVector3()
-                                            : _unwarpedHandData.PalmPosition.ToVector3();
+                                            : _unwarpedHandData.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
 
-      return contactBone;
+            return contactBone;
     }
 
     private void addContactBoneJoints() {
@@ -557,8 +577,8 @@ namespace Leap.Unity.Interaction {
       // If the palm contact bone is null, we can't reset bone joints.
       if (_contactBones[NUM_FINGERS * BONES_PER_FINGER] == null) return;
 
-      _contactBones[NUM_FINGERS * BONES_PER_FINGER].transform.position = _unwarpedHandData.PalmPosition.ToVector3();
-      _contactBones[NUM_FINGERS * BONES_PER_FINGER].transform.rotation = _unwarpedHandData.Rotation.ToQuaternion();
+      _contactBones[NUM_FINGERS * BONES_PER_FINGER].transform.position = _unwarpedHandData.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+            _contactBones[NUM_FINGERS * BONES_PER_FINGER].transform.rotation = _unwarpedHandData.Rotation.ToQuaternion();
       _contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.velocity = Vector3.zero;
       _contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.angularVelocity = Vector3.zero;
 
@@ -567,9 +587,9 @@ namespace Leap.Unity.Interaction {
           Bone bone = _unwarpedHandData.Fingers[fingerIndex].Bone((Bone.BoneType)(jointIndex) + 1); // +1 to skip first bone.
           int boneArrayIndex = fingerIndex * BONES_PER_FINGER + jointIndex;
 
-          _contactBones[boneArrayIndex].transform.position = bone.Center.ToVector3();
-          _contactBones[boneArrayIndex].transform.rotation = bone.Rotation.ToQuaternion();
-          _contactBones[boneArrayIndex].rigidbody.position = bone.Center.ToVector3();
+          _contactBones[boneArrayIndex].transform.position = bone.Center.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+                    _contactBones[boneArrayIndex].transform.rotation = bone.Rotation.ToQuaternion();
+          _contactBones[boneArrayIndex].rigidbody.position = bone.Center.ToVector3()+ newPosition; ////////////////////////////////////////////////////////////////////////////CI
           _contactBones[boneArrayIndex].rigidbody.rotation = bone.Rotation.ToQuaternion();
           _contactBones[boneArrayIndex].rigidbody.velocity = Vector3.zero;
           _contactBones[boneArrayIndex].rigidbody.angularVelocity = Vector3.zero;
@@ -597,15 +617,17 @@ namespace Leap.Unity.Interaction {
     public void FillBones(Hand inHand) {
       if (softContactEnabled) { return; }
       if (Application.isPlaying && _contactBones.Length == NUM_FINGERS * BONES_PER_FINGER + 1) {
-        Vector elbowPos = inHand.Arm.ElbowPosition;
-        inHand.SetTransform(_contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.position, _contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.rotation);
+        Vector elbowPos = inHand.Arm.ElbowPosition + newPosition.ToVector(); ////////////////////////////////////////////////////////////////////////////CI
+                inHand.SetTransform(_contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.position + newPosition ////////////////////////////////////////////////////////////////////////////CI
+                    , _contactBones[NUM_FINGERS * BONES_PER_FINGER].rigidbody.rotation);
 
         for (int fingerIndex = 0; fingerIndex < NUM_FINGERS; fingerIndex++) {
           for (int jointIndex = 0; jointIndex < BONES_PER_FINGER; jointIndex++) {
             Bone bone = inHand.Fingers[fingerIndex].Bone((Bone.BoneType)(jointIndex) + 1);
             int boneArrayIndex = fingerIndex * BONES_PER_FINGER + jointIndex;
-            Vector displacement = _contactBones[boneArrayIndex].rigidbody.position.ToVector() - bone.Center;
-            bone.Center += displacement;
+            Vector displacement = _contactBones[boneArrayIndex].rigidbody.position.ToVector() + newPosition.ToVector() ////////////////////////////////////////////////////////////////////////////CI
+                        - bone.Center;
+                        bone.Center += displacement;
             bone.PrevJoint += displacement;
             bone.NextJoint += displacement;
             bone.Rotation = _contactBones[boneArrayIndex].rigidbody.rotation.ToLeapQuaternion();
@@ -674,8 +696,8 @@ namespace Leap.Unity.Interaction {
       if (!isGraspingObject) {
         Debug.LogError("Tried to get grasp point of InteractionHand, but it is not "
                      + "currently grasping an object.", this);
-        return leapHand.PalmPosition.ToVector3();
-      }
+        return leapHand.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+            }
 
       int numGraspingFingertips = 0;
       _grabClassifier.GetGraspingFingertipPositions(graspedObject, _fingertipPositionsBuffer, out numGraspingFingertips);
@@ -687,8 +709,8 @@ namespace Leap.Unity.Interaction {
         return sum / numGraspingFingertips;
       }
       else {
-        return leapHand.PalmPosition.ToVector3();
-      }
+        return leapHand.PalmPosition.ToVector3() + newPosition; ////////////////////////////////////////////////////////////////////////////CI
+            }
     }
 
     /// <summary>
@@ -768,8 +790,8 @@ namespace Leap.Unity.Interaction {
         // Primary Hover Points
         for (int i = 0; i < NUM_FINGERS; i++) {
           if (enabledPrimaryHoverFingertips[i]) {
-            drawPrimaryHoverPoint(drawer, _testHand.Fingers[i].TipPosition.ToVector3());
-          }
+            drawPrimaryHoverPoint(drawer, _testHand.Fingers[i].TipPosition.ToVector3() + newPosition); ////////////////////////////////////////////////////////////////////////////CI
+                    }
         }
       }
     }

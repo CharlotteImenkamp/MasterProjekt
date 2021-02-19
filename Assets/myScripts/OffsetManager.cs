@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap;
 using Leap.Unity;
+using Leap.Unity.Interaction; 
 
 public class OffsetManager : MonoBehaviour
 {
@@ -11,28 +12,39 @@ public class OffsetManager : MonoBehaviour
 
     public float m_offset = 0.1f;
     RiggedHand riggedHand;
-    CapsuleHand capsuleHand; 
+    CapsuleHand capsuleHand;
+
+    private InteractionHand intHand;
+    public GameObject interactionManager;
+    public Vector3 newPosition; 
 
 	void Start()
     {
+        interactionManager.transform.position = newPosition; 
 
     // CANVAS
         Canvas.SetActive(false);
         m_handmodel.SetActive(true);
 
-    // OFFSET
-        riggedHand = m_handmodel.GetComponentInChildren<RiggedHand>();
-        riggedHand.offset = new Vector3(0, 0, m_offset);
+        // OFFSET
+        if (riggedHand)
+        {
+            riggedHand = m_handmodel.GetComponentInChildren<RiggedHand>();
+            riggedHand.offset = new Vector3(0, 0, m_offset);
+        }
 
-        capsuleHand = m_handmodel.GetComponentInChildren<CapsuleHand>();
-        capsuleHand.offset = new Vector3(0, 0, m_offset);
-
+        if (capsuleHand)
+        {
+            capsuleHand = m_handmodel.GetComponentInChildren<CapsuleHand>();
+            capsuleHand.offset = new Vector3(0, 0, m_offset);
+        }
+        
      // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Canvas_OnTaskChangedHandler;
 	}
 
-// EVENTHANDLING
-	private void Canvas_OnTaskChangedHandler(gameState newState)
+    // EVENTHANDLING
+    private void Canvas_OnTaskChangedHandler(gameState newState)
     {
         if(newState == gameState.taskSwitching)
         {
@@ -40,8 +52,14 @@ public class OffsetManager : MonoBehaviour
             m_handmodel.SetActive(false);
 
             // Set offset 
-            riggedHand.offset = new Vector3(m_offset  * (GameManager.Instance.m_TaskIndex+1), 0, 0);
-            capsuleHand.offset = new Vector3(m_offset * (GameManager.Instance.m_TaskIndex+1), 0, 0);
+            if (riggedHand)
+            {
+                riggedHand.offset = new Vector3(m_offset * (GameManager.Instance.m_TaskIndex + 1), 0, 0);
+            }
+            if (capsuleHand)
+            {
+                capsuleHand.offset = new Vector3(m_offset * (GameManager.Instance.m_TaskIndex + 1), 0, 0);
+            }
         }
         else
         {

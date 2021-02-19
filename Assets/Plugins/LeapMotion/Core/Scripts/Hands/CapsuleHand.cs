@@ -130,18 +130,20 @@ namespace Leap.Unity {
         _rightColorIndex = (_rightColorIndex + 1) % _rightColorList.Length;
       }
     }
-
-    public override void UpdateHand() {
+       ///////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
+       public Vector3 offset = new Vector3(2.0f, 0, 0);
+       //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        public override void UpdateHand() {
       _curSphereIndex   = 0;
       _curCylinderIndex = 0;
 
 
-            /////////////////////////////////////////////////////////////////////NEU CI
-            float offset = 2.0f; 
-            Vector3 newPosition = _hand.PalmPosition.ToVector3()+ Vector3.right*offset;
+            //////////////////////////////////////////////////////////////////////////////////////////////NEU CI
+            Vector3 newPosition = _hand.PalmPosition.ToVector3()+ offset;
             Quaternion newRotation = _hand.Rotation.ToQuaternion(); 
             _hand.SetTransform(newPosition, newRotation); 
-            //////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////////////
             
 
       if (_spherePositions == null || _spherePositions.Length != TOTAL_JOINT_COUNT) {
@@ -162,7 +164,7 @@ namespace Leap.Unity {
           int key = getFingerJointIndex((int)finger.Type, j);
 
           Vector3 position = finger.Bone((Bone.BoneType)j).NextJoint.ToVector3();
-          _spherePositions[key] = position;                                                             // *******
+          _spherePositions[key] = position;                                                             
 
           drawSphere(position);
         }
@@ -171,7 +173,7 @@ namespace Leap.Unity {
       //Now we just have a few more spheres for the hands
       //PalmPos, WristPos, and mockThumbJointPos, which is derived and not taken from the frame obj
 
-      Vector3 palmPosition = _hand.PalmPosition.ToVector3();                                                 // *******
+      Vector3 palmPosition = _hand.PalmPosition.ToVector3();                                                 
       drawSphere(palmPosition, _palmRadius);
 
       Vector3 thumbBaseToPalm = _spherePositions[THUMB_BASE_INDEX] - _hand.PalmPosition.ToVector3();

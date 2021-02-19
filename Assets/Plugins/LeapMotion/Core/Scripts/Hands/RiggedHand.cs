@@ -97,26 +97,25 @@ namespace Leap.Unity {
       updateDeformPositionsInFingers();
       updateScaleLastFingerBoneInFingers();
     }
-
-    public override void UpdateHand() {
+        /////////////////////////////////////////////////////////////// NEU CI
+        public Vector3 offset = new Vector3(1.0f, 0, 0);
+        ////////////////////////////////////////////////////////////////////////// 
+        
+        public override void UpdateHand() {
+            
       if (palm != null) {
         if (modelPalmAtLeapWrist) {
-                    // wrist joint position
-                    // palm.position = GetWristPosition();                   //**
+                    // palm.position = GetWristPosition();                   
                     /////////////////////////////////////////////////////////////// NEU CI
-                    float offset = 1.0f; 
-                    palm.position = GetWristPosition() + Vector3.forward * offset; 
+                    palm.position = GetWristPosition() + offset; 
                     ///////////////////////////////////////////////////////////////
                 }
         else {
-          // palm position
-          palm.position = GetPalmPosition();                    //**
+          palm.position = GetPalmPosition();                    
                     if (wristJoint) {
-                        // wrist joint position
-                        // wristJoint.position = GetWristPosition();           //**
+                        // wristJoint.position = GetWristPosition();           
                         /////////////////////////////////////////////////////////////// NEU CI
-                        float offset = 1.0f;
-                        wristJoint.position = GetWristPosition() + Vector3.forward * offset;
+                        wristJoint.position = GetWristPosition() + offset;
                         ///////////////////////////////////////////////////////////////
                     }
                 }

@@ -935,11 +935,12 @@ namespace Leap.Unity.Interaction {
     /// </remarks>
     protected abstract bool initContact();
 
-    private void finishInitContact() {
+        private void finishInitContact() {
       contactBoneParent.layer = manager.contactBoneLayer;
-      contactBoneParent.transform.parent = manager.transform;
 
-      var comment = contactBoneParent.GetComponent<ContactBoneParent>();
+            contactBoneParent.transform.parent = manager.transform; 
+
+            var comment = contactBoneParent.GetComponent<ContactBoneParent>();
       if (comment == null) {
         comment = contactBoneParent.AddComponent<ContactBoneParent>();
       }
@@ -951,8 +952,8 @@ namespace Leap.Unity.Interaction {
         contactBone.gameObject.layer = manager.contactBoneLayer;
       }
 
-      _boneTargetPositions = new Vector3[contactBones.Length];
-      _boneTargetRotations = new Quaternion[contactBones.Length];
+      _boneTargetPositions = new Vector3[contactBones.Length];          
+            _boneTargetRotations = new Quaternion[contactBones.Length];
     }
 
     private void fixedUpdateContact() {
@@ -991,15 +992,17 @@ namespace Leap.Unity.Interaction {
       // for use during the contact update.
       using (new ProfilerSample("Update Contact Bone Targets")) {
         for (int i = 0; i < contactBones.Length; i++) {
-          getColliderBoneTargetPositionRotation(i, out _boneTargetPositions[i],
+          getColliderBoneTargetPositionRotation(i, out _boneTargetPositions[i],     
                                                    out _boneTargetRotations[i]);
-        }
-      }
+
+                  
+                }
+            }
 
       using (new ProfilerSample("Update Contact Bones")) {
         normalizeBoneMasses();
         for (int i = 0; i < contactBones.Length; i++) {
-          updateContactBone(i, _boneTargetPositions[i], _boneTargetRotations[i]);
+          updateContactBone(i, _boneTargetPositions[i], _boneTargetRotations[i]); 
         }
       }
       using (new ProfilerSample("Update Soft Contact")) {
@@ -1634,10 +1637,10 @@ namespace Leap.Unity.Interaction {
         Quaternion rotation;
         getColliderBoneTargetPositionRotation(index++, out position, out rotation);
 
-        contactBone.rigidbody.position = position;
-        contactBone.rigidbody.rotation = rotation;
-        contactBone.rigidbody.velocity = Vector3.zero;
-        contactBone.rigidbody.angularVelocity = Vector3.zero;
+                contactBone.rigidbody.position = position;  /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////??  CI
+                contactBone.rigidbody.rotation = rotation;
+                contactBone.rigidbody.velocity = Vector3.zero;
+                contactBone.rigidbody.angularVelocity = Vector3.zero;
       }
     }
 

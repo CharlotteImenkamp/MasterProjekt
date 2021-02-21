@@ -833,6 +833,7 @@ namespace Leap.Unity.Interaction {
         this.transform.GetComponentsInChildren<InteractionController>(false, tempControllers);
         foreach (var controller in tempControllers) {
           _interactionControllers.Add(controller);
+          
         }
       }
       finally {

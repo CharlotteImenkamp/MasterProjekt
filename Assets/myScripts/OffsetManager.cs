@@ -10,7 +10,20 @@ public class OffsetManager : MonoBehaviour
 	public GameObject Canvas;
 	public GameObject m_handmodel;
 
-    public float m_offset = 0.1f;
+    private float m_offset = 0.2f;
+    public float offset
+    {
+        get { return m_offset; }
+        set
+        {
+            m_offset = value;
+            OnOffsetChanged(m_offset);
+        }
+    }
+    public delegate void OnOffsetChangedDelegate(float newOffset);
+    public event OnOffsetChangedDelegate OnOffsetChanged;
+
+
     RiggedHand riggedHand;
     CapsuleHand capsuleHand;
 
@@ -20,6 +33,9 @@ public class OffsetManager : MonoBehaviour
 
 	void Start()
     {
+        // EVENTHANDLING
+        OnOffsetChanged += OnOffsetChangedHandler;
+
         interactionManager.transform.position = newPosition; 
 
     // CANVAS
@@ -43,8 +59,13 @@ public class OffsetManager : MonoBehaviour
         GameManager.Instance.OnTaskChanged += Canvas_OnTaskChangedHandler;
 	}
 
-    // EVENTHANDLING
-    private void Canvas_OnTaskChangedHandler(gameState newState)
+    private void OnOffsetChangedHandler(float newOffset)
+    {
+
+    }
+
+        // EVENTHANDLING
+        private void Canvas_OnTaskChangedHandler(gameState newState)
     {
         if(newState == gameState.taskSwitching)
         {
@@ -54,11 +75,11 @@ public class OffsetManager : MonoBehaviour
             // Set offset 
             if (riggedHand)
             {
-                riggedHand.offset = new Vector3(m_offset * (GameManager.Instance.m_TaskIndex + 1), 0, 0);
+                riggedHand.offset = new Vector3(m_offset, 0, 0);
             }
             if (capsuleHand)
             {
-                capsuleHand.offset = new Vector3(m_offset * (GameManager.Instance.m_TaskIndex + 1), 0, 0);
+                capsuleHand.offset = new Vector3(m_offset, 0, 0);
             }
         }
         else

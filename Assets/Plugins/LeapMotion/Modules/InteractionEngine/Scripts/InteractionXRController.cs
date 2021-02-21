@@ -413,13 +413,16 @@ namespace Leap.Unity.Interaction {
     public override bool isLeft {
       get { return chirality == Chirality.Left; }
     }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CI 
+        Vector3 newPositionCI = new Vector3(0,0,0.2f); 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CI 
 
-    /// <summary>
-    /// Gets the last-tracked position of the controller.
-    /// </summary>
-    public override Vector3 position {
+        /// <summary>
+        /// Gets the last-tracked position of the controller.
+        /// </summary>
+        public override Vector3 position {
       get {
-        return this.transform.position;
+        return this.transform.position + newPositionCI; ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CI 
       }
     }
 
@@ -591,8 +594,9 @@ namespace Leap.Unity.Interaction {
 
       foreach (var collider in _colliderBuffer) {
         if (collider.isTrigger) continue; // Contact Bones are for "contacting" colliders.
-
+        
         ContactBone contactBone = collider.gameObject.AddComponent<ContactBone>();
+                
         Rigidbody body = collider.gameObject.GetComponent<Rigidbody>();
         if (body == null) {
           body = collider.gameObject.AddComponent<Rigidbody>();
@@ -603,9 +607,10 @@ namespace Leap.Unity.Interaction {
         body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         body.mass = 1F;
 
-        contactBone.interactionController = this;
+            contactBone.interactionController = this;
         contactBone.rigidbody = body;
         contactBone.collider = collider;
+       contactBone.gameObject.transform.position += newPositionCI;  //////////////////////////////////////////////////////////////////////////////////////////////// NEU CI
 
         _contactBoneBuffer.Add(contactBone);
       }

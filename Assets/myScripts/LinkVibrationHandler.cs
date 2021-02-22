@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Leap.Unity;
 using Leap.Unity.Interaction;
 using Leap.Unity.Query;
-//using LinkVibrationController; 
 
 public class LinkVibrationHandler : MonoBehaviour
 {
@@ -87,7 +84,6 @@ public class LinkVibrationHandler : MonoBehaviour
                         }
                         // controller.Vibrate(vibrationIndex, 1000);
                         Debug.Log("Found collision for fingertip: " + finger.Type);
-
                     }
                 }
             // }

@@ -26,10 +26,10 @@ public class GameManager : MonoBehaviour
 	public AudioSource m_audioSource;
 
 	// LEVEL
-	public int m_TaskIndex; 
+	public int m_TaskIndex;
 
-    // SINGELTON
-    private void Awake()
+	// SINGELTON
+	private void Awake()
 	{
 		if (Instance == null)
 		{
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		// DEFAULT
-		m_TaskIndex = 0; 
+		m_TaskIndex = 0;
 	}
 
 	// EVENTHANDLING
@@ -66,6 +66,10 @@ public class GameManager : MonoBehaviour
 		if(newState == gameState.taskSwitching)
         {
 			Invoke("setGameStatetoRunning", 3);  
+        }
+		if(newState == gameState.taskRunning)
+        {
+
         }
     }
 

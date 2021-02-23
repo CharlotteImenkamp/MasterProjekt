@@ -52,7 +52,6 @@ public class LinkVibrationHandler : MonoBehaviour
                                              .Where(intHand => intHand != null)
                                              .Select(intHand => intHand.leapHand))
             {
-
                 foreach (var finger in contactingHand.Fingers)
                 {
                     var fingertipPosition = finger.TipPosition.ToVector3();

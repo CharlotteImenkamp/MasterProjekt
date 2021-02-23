@@ -8,53 +8,44 @@ public class CustomHand: MonoBehaviour
 {
     private InteractionHand _intManager;
 
-    private Hand hand;
-    private Hand handCopy;
+    private Hand _hand;
+    private Hand _handCopy;
 
     public bool customHandIsRight;
 
-    private Vector3 newPosition;
-    private Quaternion newRotation = new Quaternion(0, 0, 0, 0);
+    private Vector3 _newPosition;
+    private Quaternion _newRotation;  
 
     private OffsetManager _offManager;
-    public Vector3 _offset;
+    public Vector3 _PhysicsHandOffset;
 
-    public GameObject handModelright;
-    public GameObject handModelleft;
-    private RiggedHand handRight;
-    private RiggedHand handLeft;
+    
 
-
-    void Start()
+    private void Awake()
     {
-        _offManager.OnOffsetChanged += OnOffsetChangedHandler; 
-
-    // rigged hand
-        handRight = handModelright.GetComponent<RiggedHand>();
-        handLeft = handModelleft.GetComponent<RiggedHand>();
-
-        handRight.offset = _offset;
-        handLeft.offset = -_offset;
-
-    // physics hand 
-        hand = new Hand();
-        handCopy = new Hand();
+        // physics hand 
+        _hand = new Hand();
+        _handCopy = new Hand();
 
         _intManager = gameObject.GetComponent<InteractionHand>();
         _intManager.handAccessorFunc = (frame) => TransformLeapHandModel(frame);
+    }
 
+    void Start()
+    {
+        _offManager = GameObject.Find("OffsetManager").GetComponent<OffsetManager>();
+        _offManager.OnOffsetChanged += OnOffsetChangedHandler;
+
+        // DEFAULT
+        _PhysicsHandOffset = new Vector3(0, 0, _offManager.offset);
     }
 
     private void OnOffsetChangedHandler(float newOffset)
     {
-        _offset.z = _offManager.offset;
+        _PhysicsHandOffset = new Vector3(0,0, _offManager.offset);
 
     // physics hand
         _intManager.handAccessorFunc = (frame) => TransformLeapHandModel(frame);        //****  muss ich das hier nochmal machen?
-
-    // rigged hand 
-        handRight.offset = _offset;
-        handLeft.offset = -_offset;
     }
 
     Hand TransformLeapHandModel(Frame frame)
@@ -62,27 +53,27 @@ public class CustomHand: MonoBehaviour
 
         if (customHandIsRight)
         {
-            hand = frame.Get(Chirality.Right);
-            handCopy = hand;
-            if (handCopy != null)
+            _hand = frame.Get(Chirality.Right);
+            _handCopy = _hand;
+            if (_handCopy != null)
             {
-                newPosition = handCopy.PalmPosition.ToVector3() + _offset;
-                newRotation = handCopy.Rotation.ToQuaternion();
-                handCopy.SetTransform(newPosition, newRotation);
+                _newPosition = _handCopy.PalmPosition.ToVector3() + _PhysicsHandOffset;
+                _newRotation = _handCopy.Rotation.ToQuaternion();
+                _handCopy.SetTransform(_newPosition, _newRotation);
             }
         }
         else
         {
-            hand = frame.Get(Chirality.Left);
-            handCopy = hand;
-            if (handCopy != null)
+            _hand = frame.Get(Chirality.Left);
+            _handCopy = _hand;
+            if (_handCopy != null)
             {
-                newPosition = handCopy.PalmPosition.ToVector3() - _offset;
-                newRotation = handCopy.Rotation.ToQuaternion();
-                handCopy.SetTransform(newPosition, newRotation);
+                _newPosition = _handCopy.PalmPosition.ToVector3() - _PhysicsHandOffset;
+                _newRotation = _handCopy.Rotation.ToQuaternion();
+                _handCopy.SetTransform(_newPosition, _newRotation);
             }
         }
-        return handCopy;
+        return _handCopy;
     }
 
 }

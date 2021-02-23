@@ -45,20 +45,27 @@ namespace Leap.Unity{
     /** The Leap Finger object. */
     protected Finger finger_;
 
-    /** Sets the Leap Hand and Leap Finger for this finger.
-    * Note that Leap Hand and Finger objects are recreated every frame. The
-    * parent HandModel object calls this function to set or update the underlying
-    * finger. The tracking data in the Leap objects are used to update the FingerModel.
-    */
-    public void SetLeapHand(Hand hand) {
-      hand_ = hand;
-      if (hand_ != null) {
-        finger_ = hand.Fingers[(int)fingerType];
-      }
-    }
+        /** Sets the Leap Hand and Leap Finger for this finger.
+        * Note that Leap Hand and Finger objects are recreated every frame. The
+        * parent HandModel object calls this function to set or update the underlying
+        * finger. The tracking data in the Leap objects are used to update the FingerModel.
+        */
 
-    /** The Leap Hand object. */
-    public Hand GetLeapHand() { return hand_; }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void SetLeapHand(Hand hand)
+        {
+            hand_ = hand;
+            if (hand_ != null)
+            {
+                finger_ = hand.Fingers[(int)fingerType];
+
+            }
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /** The Leap Hand object. */
+        public Hand GetLeapHand() { return hand_; }
     /** The Leap Finger object. */
     public Finger GetLeapFinger() { return finger_; }
 

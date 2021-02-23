@@ -83,12 +83,15 @@ public class GameManager : MonoBehaviour
 	public void setGameStatetoComparision()
 	{
 		state = gameState.comparision;
-
 	}
 	public void setGameStatetoSwitching()
 	{
 		state = gameState.taskSwitching;
 	}
+	public void setGameStatetoSolution()
+	{
+		state = gameState.solution;
+	}
 
-    #endregion
+	#endregion
 }

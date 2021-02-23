@@ -61,6 +61,10 @@ public class ButtonManager : MonoBehaviour
 		{
 			deactivateExept(Buttons_Numbers); 
 		}
+		if (newState == gameState.solution)
+		{
+			deactivateExept(Buttons_Comparision);
+		}
 	}
 
 	private void activateAbfrageButton()
@@ -68,7 +72,7 @@ public class ButtonManager : MonoBehaviour
 		Button_Abfrage.SetActive(true); 
     }
 
-	public void saveChoise(GameObject obj)
+	public void saveChoice(GameObject obj)
     {
 		if(obj.tag == "UINumber")
         {

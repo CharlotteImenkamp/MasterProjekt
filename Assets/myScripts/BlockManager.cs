@@ -31,7 +31,9 @@ public class BlockManager : MonoBehaviour
     // EVENTHANDLING
     private void Blocks_OnTaskChangedHandler(gameState newState)
     {
-        if (newState == gameState.comparision)
+        // TODO Blöcke verschwinden bei vergleich 
+
+        if (newState == gameState.comparision || newState == gameState.solution)
         {
         }
         else

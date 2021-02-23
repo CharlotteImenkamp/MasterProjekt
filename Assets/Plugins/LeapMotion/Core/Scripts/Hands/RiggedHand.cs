@@ -97,25 +97,47 @@ namespace Leap.Unity {
       updateDeformPositionsInFingers();
       updateScaleLastFingerBoneInFingers();
     }
+
         /////////////////////////////////////////////////////////////// NEU CI
-        public Vector3 offset = new Vector3(1.0f, 0, 0);
-        ////////////////////////////////////////////////////////////////////////// 
-        
-        public override void UpdateHand() {
+
+
+        public Vector3 _riggedHandOffset;
+        public Vector3 _newTestOffset;
+        private Vector3 _newPosition;
+        private Quaternion _newRotation;
+
+        public override void SetLeapHand(Hand hand)
+        {
+            hand_ = hand;
+            _newPosition = hand_.PalmPosition.ToVector3() + _riggedHandOffset;
+            _newRotation = hand_.Rotation.ToQuaternion();
+            hand_.SetTransform(_newPosition, _newRotation);
+
+            for (int i = 0; i < fingers.Length; ++i)
+            {
+                if (fingers[i] != null)
+                {
+                    fingers[i].SetLeapHand(hand_);
+                }
+            }
+        }
+    ////////////////////////////////////////////////////////////////////////// 
+
+    public override void UpdateHand() {
             
       if (palm != null) {
         if (modelPalmAtLeapWrist) {
-                    // palm.position = GetWristPosition();                   
+                    palm.position = GetWristPosition();                   
                     /////////////////////////////////////////////////////////////// NEU CI
-                    palm.position = GetWristPosition() + offset; 
+                    // palm.position = GetWristPosition() + _riggedHandOffset; 
                     ///////////////////////////////////////////////////////////////
                 }
         else {
           palm.position = GetPalmPosition();                    
                     if (wristJoint) {
-                        // wristJoint.position = GetWristPosition();           
+                        wristJoint.position = GetWristPosition();           
                         /////////////////////////////////////////////////////////////// NEU CI
-                        wristJoint.position = GetWristPosition() + offset;
+                        // wristJoint.position = GetWristPosition() + _riggedHandOffset;
                         ///////////////////////////////////////////////////////////////
                     }
                 }

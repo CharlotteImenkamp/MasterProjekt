@@ -1,7 +1,8 @@
 ﻿public enum gameState
 {
     introduction,
+    taskSwitching,
     taskRunning,
     comparision,
-    taskSwitching
+    solution
 }

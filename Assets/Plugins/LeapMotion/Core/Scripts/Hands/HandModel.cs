@@ -204,7 +204,7 @@ namespace Leap.Unity{
     */
     public override void SetLeapHand(Hand hand) {
       hand_ = hand;
-      for (int i = 0; i < fingers.Length; ++i) {
+            for (int i = 0; i < fingers.Length; ++i) {
         if (fingers[i] != null) {
           fingers[i].SetLeapHand(hand_);
         }

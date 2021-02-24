@@ -24,7 +24,8 @@ public class TextManager : MonoBehaviour
     // DEFAULT VALUES
         m_textIndex = 0;
         activateNextTextElement();
-        deactivateExept(m_ArrImageObjects, null); 
+        deactivateExept(m_ArrImageObjects, null);
+        deactivateExept(m_ArrEndTextObjects, null); 
     }
 
 // EVENTHANDLING
@@ -41,11 +42,12 @@ public class TextManager : MonoBehaviour
             {
                 deactivateExept(m_ArrImageObjects, null); 
                 Debug.Log("TextManager::gameStateHandler >> No more Images to show.");
-                GameManager.Instance.setGameStatetoEnd(); 
             }
         }
         else if(newState == gameState.end)
         {
+            deactivateExept(m_ArrTextObjects, null); 
+            deactivateExept(m_ArrImageObjects, null);
             deactivateExept(m_ArrEndTextObjects, m_ArrEndTextObjects[0]); 
         }
         else

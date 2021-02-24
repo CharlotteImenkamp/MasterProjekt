@@ -98,47 +98,18 @@ namespace Leap.Unity {
       updateScaleLastFingerBoneInFingers();
     }
 
-        /////////////////////////////////////////////////////////////// NEU CI
-
-
-        public Vector3 _riggedHandOffset;
-        public Vector3 _newTestOffset;
-        private Vector3 _newPosition;
-        private Quaternion _newRotation;
-
-        public override void SetLeapHand(Hand hand)
-        {
-            hand_ = hand;
-            _newPosition = hand_.PalmPosition.ToVector3() + _riggedHandOffset;
-            _newRotation = hand_.Rotation.ToQuaternion();
-            hand_.SetTransform(_newPosition, _newRotation);
-
-            for (int i = 0; i < fingers.Length; ++i)
-            {
-                if (fingers[i] != null)
-                {
-                    fingers[i].SetLeapHand(hand_);
-                }
-            }
-        }
-    ////////////////////////////////////////////////////////////////////////// 
+        
 
     public override void UpdateHand() {
             
       if (palm != null) {
         if (modelPalmAtLeapWrist) {
                     palm.position = GetWristPosition();                   
-                    /////////////////////////////////////////////////////////////// NEU CI
-                    // palm.position = GetWristPosition() + _riggedHandOffset; 
-                    ///////////////////////////////////////////////////////////////
                 }
         else {
           palm.position = GetPalmPosition();                    
                     if (wristJoint) {
                         wristJoint.position = GetWristPosition();           
-                        /////////////////////////////////////////////////////////////// NEU CI
-                        // wristJoint.position = GetWristPosition() + _riggedHandOffset;
-                        ///////////////////////////////////////////////////////////////
                     }
                 }
         // palm rotation
@@ -154,7 +125,7 @@ namespace Leap.Unity {
       for (int i = 0; i < fingers.Length; ++i) {
         if (fingers[i] != null) {
           fingers[i].fingerType = (Finger.FingerType)i;
-          fingers[i].UpdateFinger();                            //**
+          fingers[i].UpdateFinger();                         
                 }
       }
     }

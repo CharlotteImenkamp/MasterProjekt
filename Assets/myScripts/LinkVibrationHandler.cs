@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using Leap;
 using Leap.Unity;
 using Leap.Unity.Interaction;
 using Leap.Unity.Query;
+using UnityEngine;
+using System.Collections; 
 
 public class LinkVibrationHandler : MonoBehaviour
 {
     // private LinkVibrationManager controller;
-
+    public float waitTime = 1.0f; 
 
 // FIND FINGER INDEX
     private InteractionBehaviour intObj;
 
     private float _fingertipRadius = 0.01f;  // 1 cm
-    int vibrationIndex;
+    private int _fingerIdx; 
 
-    private bool enableVibration; 
+    private bool _enableVibration;
+    private bool[] _enableFingers; 
 
     void Start()
     {
@@ -25,7 +28,8 @@ public class LinkVibrationHandler : MonoBehaviour
         intObj = gameObject.GetComponent<InteractionBehaviour>();
 
         // DEFAULT
-        enableVibration = false; 
+        _enableVibration = false;
+        _enableFingers = new bool[5] { true, true, true, true, true }; 
     }
 
 // EVENTHANDLING
@@ -33,18 +37,18 @@ public class LinkVibrationHandler : MonoBehaviour
     {
         if (newState == gameState.taskRunning)
         {
-            enableVibration = true; 
+            _enableVibration = true; 
         }
         else
         {
-            enableVibration = false; 
+            _enableVibration = false; 
         }
     }
 
  // FIND FINGER INDEX
     void FixedUpdate()
     {
-        // if (controller && enableVibration)
+        // if (controller)
         //{
             foreach (var contactingHand in intObj.contactingControllers
                                              .Query()
@@ -56,37 +60,99 @@ public class LinkVibrationHandler : MonoBehaviour
                 {
                     var fingertipPosition = finger.TipPosition.ToVector3();
 
-                    // If the distance from the fingertip and the object is less
-                    // than the 'fingertip radius', the fingertip is touching the object.
                     if (intObj.GetHoverDistance(fingertipPosition) < _fingertipRadius)
                     {
                         switch (finger.Type)
                         {
-                            case Leap.Finger.FingerType.TYPE_THUMB:
-                                vibrationIndex = 0;
+                            case Finger.FingerType.TYPE_THUMB:
+                                _fingerIdx = (int)Finger.FingerType.TYPE_THUMB; 
+                                if (_enableFingers[_fingerIdx])
+                                {
+                                    _enableVibration = true;
+                                    _enableFingers[_fingerIdx] = false; 
+                                    StartCoroutine(DeactivateTwoSeconds(waitTime,_fingerIdx));
+                                }
+                                else
+                                {
+                                    _enableVibration = false;
+                                }
                                 break;
-                            case Leap.Finger.FingerType.TYPE_INDEX:
-                                vibrationIndex = 1;
+
+                            case Finger.FingerType.TYPE_INDEX:
+                                _fingerIdx = (int)Finger.FingerType.TYPE_INDEX;
+                                if (_enableFingers[_fingerIdx])
+                                {
+                                    _enableVibration = true;
+                                    _enableFingers[_fingerIdx] = false;
+                                    StartCoroutine(DeactivateTwoSeconds(waitTime, _fingerIdx));
+                                }
+                                else
+                                {
+                                    _enableVibration = false;
+                                }
+                                break; 
+
+                            case Finger.FingerType.TYPE_MIDDLE:
+                                _fingerIdx = (int)Finger.FingerType.TYPE_MIDDLE;
+                                if (_enableFingers[_fingerIdx])
+                                {
+                                    _enableVibration = true;
+                                    _enableFingers[_fingerIdx] = false;
+                                    StartCoroutine(DeactivateTwoSeconds(waitTime, _fingerIdx));
+                                }
+                                else
+                                {
+                                    _enableVibration = false;
+                                }
                                 break;
-                            case Leap.Finger.FingerType.TYPE_MIDDLE:
-                                vibrationIndex = 2;
+
+                            case Finger.FingerType.TYPE_RING:
+                                _fingerIdx = (int)Finger.FingerType.TYPE_RING;
+                                if (_enableFingers[_fingerIdx])
+                                {
+                                    _enableVibration = true;
+                                    _enableFingers[_fingerIdx] = false;
+                                    StartCoroutine(DeactivateTwoSeconds(waitTime, _fingerIdx));
+                                }
+                                else
+                                {
+                                    _enableVibration = false;
+                                }
                                 break;
-                            case Leap.Finger.FingerType.TYPE_RING:
-                                vibrationIndex = 3;
+
+                            case Finger.FingerType.TYPE_PINKY:
+                                _fingerIdx = (int)Finger.FingerType.TYPE_PINKY;
+                                if (_enableFingers[_fingerIdx])
+                                {
+                                    _enableVibration = true;
+                                    _enableFingers[_fingerIdx] = false;
+                                    StartCoroutine(DeactivateTwoSeconds(waitTime, _fingerIdx));
+                                }
+                                else
+                                {
+                                    _enableVibration = false;
+                                }
                                 break;
-                            case Leap.Finger.FingerType.TYPE_PINKY:
-                                vibrationIndex = 4;
-                                break;
+
                             default:
                                 Debug.LogWarning("LinkVibrationHandler::FixedUpdate No valid finger ID");
                                 break;
                         }
-                        // controller.Vibrate(vibrationIndex, 1000);
+                    if (_enableVibration)
+                    {
+                        // controller.Vibrate(_fingerIdx, 1000);
                         Debug.Log("Found collision for fingertip: " + finger.Type);
+                    } 
                     }
                 }
             // }
         }
         
+    }
+
+    private IEnumerator DeactivateTwoSeconds(float waitTime, int idx)
+    {
+        yield return new WaitForSeconds(waitTime);
+        _enableFingers[idx] = true; 
     }
 }

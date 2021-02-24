@@ -2,9 +2,8 @@
 using Leap;
 using Leap.Unity; 
 using Leap.Unity.Interaction;
-using System;
 
-public class CustomHand: MonoBehaviour
+public class CustomInteractionHand: MonoBehaviour
 {
     private InteractionHand _intManager;
 
@@ -19,7 +18,10 @@ public class CustomHand: MonoBehaviour
     private OffsetManager _offManager;
     public Vector3 _PhysicsHandOffset;
 
-    
+    public CustomRiggedHand handLeft;
+    public CustomRiggedHand handRight;
+
+
 
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class CustomHand: MonoBehaviour
     {
         _offManager = GameObject.Find("OffsetManager").GetComponent<OffsetManager>();
         _offManager.OnOffsetChanged += OnOffsetChangedHandler;
+
 
         // DEFAULT
         _PhysicsHandOffset = new Vector3(0, 0, _offManager.offset);
@@ -58,6 +61,7 @@ public class CustomHand: MonoBehaviour
             if (_handCopy != null)
             {
                 _newPosition = _handCopy.PalmPosition.ToVector3() + _PhysicsHandOffset;
+                
                 _newRotation = _handCopy.Rotation.ToQuaternion();
                 _handCopy.SetTransform(_newPosition, _newRotation);
             }

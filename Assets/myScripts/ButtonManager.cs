@@ -1,44 +1,55 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic; 
 using TMPro;
-using System.Collections;
+
 
 public class ButtonManager : MonoBehaviour
 {
 // TEXT
 	public GameObject Auswahl;
-	private TextMeshPro text;
-	private string strNumber;
-	private string strSign; 
+	public GameObject EndResult; 
+
+	private TextMeshPro _text;
+	private TextMeshPro _endText;
+	private string _endNumber; 
+	private string _strNumber;
+	private string _strSign; 
 
 // UI
 	public GameObject Buttons_Numbers; 
 	public GameObject Buttons_InGame;
 	public GameObject Buttons_Introduction;
 	public GameObject Buttons_Comparision;
+	public GameObject Buttons_End;
 
-	private GameObject[] m_ArrButtons; 
+	public GameObject[] CalibrationElements; 
+
+	private GameObject[] _ArrButtons; 
 
 // BUTTONS
 	public GameObject Button_Abfrage;
-	public float m_minimal_Playtime = 2.0f; 
 
 	// START
 	void Start()
 	{
 	// Buttonarray
-		m_ArrButtons = new GameObject[] { Buttons_Comparision, Buttons_InGame, Buttons_Introduction, Buttons_Numbers }; 
+		_ArrButtons = new GameObject[] { Buttons_Comparision, Buttons_InGame, Buttons_Introduction, Buttons_Numbers, Buttons_End }; 
 
     // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Button_OnTaskChangedHandler;
 
-	// Text
-		text = Auswahl.GetComponent<TextMeshPro>();
-		strSign = "+";
+		// Text
+		_endText = EndResult.GetComponent<TextMeshPro>(); 
+		_text = Auswahl.GetComponent<TextMeshPro>();
+		_strSign = "+";
 
 	// Visibility
 		deactivateExept(Buttons_Introduction); 
+
+	// CALIBRATION
+		foreach(GameObject obj in CalibrationElements)
+        {
+			obj.SetActive(false);
+        }
 	}
 
 
@@ -49,22 +60,34 @@ public class ButtonManager : MonoBehaviour
         {
 			deactivateExept(Buttons_InGame);
 			Button_Abfrage.SetActive(false);
-			Invoke("activateAbfrageButton", m_minimal_Playtime); 
+			Invoke("activateAbfrageButton", GameManager.Instance.minimalPlaytime); 
 		}
 
 		if (newState == gameState.taskSwitching)
 		{
-			deactivateExept(null); 
+			deactivateExept(Buttons_InGame); 
 		}       
 
 		if (newState == gameState.comparision)
 		{
-			deactivateExept(Buttons_Numbers); 
+			deactivateExept(Buttons_Numbers);
+
+		// CALIBRATION
+			foreach (GameObject obj in CalibrationElements)
+			{
+				obj.SetActive(false);
+			}
 		}
+
 		if (newState == gameState.solution)
 		{
 			deactivateExept(Buttons_Comparision);
 		}
+
+		if(newState == gameState.end)
+        {
+			deactivateExept(Buttons_End); 
+        }
 	}
 
 	private void activateAbfrageButton()
@@ -76,21 +99,48 @@ public class ButtonManager : MonoBehaviour
     {
 		if(obj.tag == "UINumber")
         {
-			strNumber = obj.GetComponentInChildren<TextMeshPro>().text.ToString(); 
+			_strNumber = obj.GetComponentInChildren<TextMeshPro>().text.ToString(); 
 
 		}
 		else if (obj.tag == "UISign")
 		{
-			strSign = obj.GetComponentInChildren<TextMeshPro>().text.ToString();
+			_strSign = obj.GetComponentInChildren<TextMeshPro>().text.ToString();
 
 		}
 
-		text.text = strSign + " " + strNumber;
+		_text.text = _strSign + " " + _strNumber;
     }
+
+	public void saveEndResult(GameObject obj)
+    {
+		_endNumber = obj.GetComponentInChildren<TextMeshPro>().text.ToString();
+		switch (_endNumber)
+        {
+			case "1":
+				_endText.text = "sehr stark"; 
+				break;
+			case "2":
+				_endText.text = "stark";
+				break;
+			case "3":
+				_endText.text = "neutral";
+				break;
+			case "4":
+				_endText.text = "schwach";
+				break;
+			case "5":
+				_endText.text = "sehr schwach";
+				break;
+			default:
+				Debug.Log("Error in ButtonManager::saveEndResult");
+				break; 
+		} 
+			
+	}
 
 	private void deactivateExept(GameObject activeObj)
 	{
-		foreach (GameObject obj in m_ArrButtons)
+		foreach (GameObject obj in _ArrButtons)
 		{
 			obj.SetActive(false);
 		}
@@ -100,5 +150,4 @@ public class ButtonManager : MonoBehaviour
 			activeObj.SetActive(true);
 		}
 	}
-
 }

@@ -146,8 +146,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  deformPosition: 0
-  scaleLastFingerBone: 0
+  deformPosition: 1
+  scaleLastFingerBone: 1
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
 --- !u!1 &100008
@@ -296,8 +296,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  deformPosition: 0
-  scaleLastFingerBone: 0
+  deformPosition: 1
+  scaleLastFingerBone: 1
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
 --- !u!1 &100016
@@ -447,8 +447,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  deformPosition: 0
-  scaleLastFingerBone: 0
+  deformPosition: 1
+  scaleLastFingerBone: 1
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
 --- !u!1 &100024
@@ -597,8 +597,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  deformPosition: 0
-  scaleLastFingerBone: 0
+  deformPosition: 1
+  scaleLastFingerBone: 1
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
 --- !u!1 &100032
@@ -747,8 +747,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  deformPosition: 0
-  scaleLastFingerBone: 0
+  deformPosition: 1
+  scaleLastFingerBone: 1
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
 --- !u!1 &100040
@@ -981,4 +981,3 @@ MonoBehaviour:
   localPositions: []
   modelFingerPointing: {x: 1, y: 0, z: 0}
   modelPalmFacing: {x: -0, y: -1, z: -0}
-  _riggedHandOffset: {x: 0, y: 0, z: 0}

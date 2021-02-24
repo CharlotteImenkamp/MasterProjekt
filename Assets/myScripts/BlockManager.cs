@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    private List<Vector3> m_ArrPositions;
-    private List<Quaternion> m_ArrRotations; 
-    private GameObject[] m_ArrGameObjects;
+    private List<Vector3> _ArrPositions;
+    private List<Quaternion> _ArrRotations; 
+    private GameObject[] _ArrGameObjects;
 
 
 // START
@@ -15,29 +14,35 @@ public class BlockManager : MonoBehaviour
     // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Blocks_OnTaskChangedHandler;
 
-        // GET BLOCKS
-        m_ArrGameObjects = GameObject.FindGameObjectsWithTag("Block");
+    // GET BLOCKS
+        _ArrGameObjects = GameObject.FindGameObjectsWithTag("Block");
 
-        // GET TRANSFORMATIONS
-        m_ArrPositions = new List<Vector3>();
-        m_ArrRotations = new List<Quaternion>();
-        foreach (GameObject obj in m_ArrGameObjects)
+    // GET TRANSFORMATIONS
+        _ArrPositions = new List<Vector3>();
+        _ArrRotations = new List<Quaternion>();
+        foreach (GameObject obj in _ArrGameObjects)
         {
-            m_ArrPositions.Add(obj.transform.position);
-            m_ArrRotations.Add(obj.transform.rotation); 
+            _ArrPositions.Add(obj.transform.position);
+            _ArrRotations.Add(obj.transform.rotation); 
         }
     }
 
-    // EVENTHANDLING
+// EVENTHANDLING
     private void Blocks_OnTaskChangedHandler(gameState newState)
     {
-        // TODO Blöcke verschwinden bei vergleich 
-
-        if (newState == gameState.comparision || newState == gameState.solution)
+        if (newState == gameState.comparision || newState == gameState.solution|| newState == gameState.end)
         {
+            foreach(GameObject obj in _ArrGameObjects)
+            {
+                obj.SetActive(false); 
+            }
         }
         else
         {
+            foreach (GameObject obj in _ArrGameObjects)
+            {
+                obj.SetActive(true);
+            }
             Reset_Blocks();
         }
     }
@@ -46,12 +51,10 @@ public class BlockManager : MonoBehaviour
 // RESET
     public void Reset_Blocks()
     {
-        Debug.Log("BlockManager::Reset_Blocks"); 
-
-        for (int i = 0; i < m_ArrGameObjects.Length; i++)
+        for (int i = 0; i < _ArrGameObjects.Length; i++)
         {
-            m_ArrGameObjects[i].transform.position = m_ArrPositions[i];
-            m_ArrGameObjects[i].transform.rotation = m_ArrRotations[i]; 
+            _ArrGameObjects[i].transform.position = _ArrPositions[i];
+            _ArrGameObjects[i].transform.rotation = _ArrRotations[i]; 
         }
     }
 

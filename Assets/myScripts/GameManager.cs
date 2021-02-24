@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 
 public class GameManager : MonoBehaviour
@@ -21,12 +17,22 @@ public class GameManager : MonoBehaviour
 	public delegate void OnTaskChangedDelegate(gameState newState);
 	public event OnTaskChangedDelegate OnTaskChanged;
 
-	// MUSIK
-	public bool m_playMusic;
+
+	public int m_TaskIndex;
+
+
+// General Settings
+	[Header("General Settings")]
+
+	// music
+	public bool m_playMusic = false;
 	public AudioSource m_audioSource;
 
-	// LEVEL
-	public int m_TaskIndex;
+	// playtime
+	public float minimalPlaytime = 2.0f;
+
+	// offset
+	public float offsetStepsize = 0.1f; 
 
 	// SINGELTON
 	private void Awake()
@@ -47,11 +53,14 @@ public class GameManager : MonoBehaviour
 	{
 		// EVENTHANDLING
 		OnTaskChanged += OnTaskChangedHandler;
+		m_audioSource.mute = true;
+
 
 		// MUSIK
 		if (m_playMusic)
 		{
 			m_audioSource.Play();
+			m_audioSource.mute = false; 
 		}
 
 		// DEFAULT
@@ -67,6 +76,7 @@ public class GameManager : MonoBehaviour
         {
 			Invoke("setGameStatetoRunning", 3);  
         }
+
 		if(newState == gameState.taskRunning)
         {
 
@@ -86,7 +96,15 @@ public class GameManager : MonoBehaviour
 	}
 	public void setGameStatetoSwitching()
 	{
-		state = gameState.taskSwitching;
+		if(m_TaskIndex < 4)
+        {
+			state = gameState.taskSwitching;
+		}
+        else
+        {
+			setGameStatetoEnd(); 
+        }
+		
 	}
 	public void setGameStatetoSolution()
 	{

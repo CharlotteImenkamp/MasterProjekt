@@ -93,5 +93,10 @@ public class GameManager : MonoBehaviour
 		state = gameState.solution;
 	}
 
+	public void setGameStatetoEnd()
+	{
+		state = gameState.end;
+	}
+
 	#endregion
 }

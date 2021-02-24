@@ -6,6 +6,8 @@ public class TextManager : MonoBehaviour
 {
     private GameObject[] m_ArrTextObjects;
     private GameObject[] m_ArrImageObjects;
+    private GameObject[] m_ArrEndTextObjects;
+
     private int m_textIndex;
 
 // START
@@ -17,6 +19,7 @@ public class TextManager : MonoBehaviour
     // FIND OBJECTS
         m_ArrTextObjects = GameObject.FindGameObjectsWithTag("UIText");
         m_ArrImageObjects = GameObject.FindGameObjectsWithTag("UIImage");
+        m_ArrEndTextObjects = GameObject.FindGameObjectsWithTag("UIEndText"); 
 
     // DEFAULT VALUES
         m_textIndex = 0;
@@ -29,7 +32,7 @@ public class TextManager : MonoBehaviour
     { 
         if(newState == gameState.taskRunning)
         {
-            deactivateExept(m_ArrTextObjects, null); 
+            deactivateExept(m_ArrTextObjects, m_ArrTextObjects[m_ArrTextObjects.Length-1]); 
             if(GameManager.Instance.m_TaskIndex < m_ArrImageObjects.Length)
             {
                 deactivateExept(m_ArrImageObjects, m_ArrImageObjects[GameManager.Instance.m_TaskIndex]); 
@@ -38,7 +41,16 @@ public class TextManager : MonoBehaviour
             {
                 deactivateExept(m_ArrImageObjects, null); 
                 Debug.Log("TextManager::gameStateHandler >> No more Images to show.");
+                GameManager.Instance.setGameStatetoEnd(); 
             }
+        }
+        else if(newState == gameState.end)
+        {
+            deactivateExept(m_ArrEndTextObjects, m_ArrEndTextObjects[0]); 
+        }
+        else
+        {
+            deactivateExept(m_ArrImageObjects, null);
         }
     }
 

@@ -4,5 +4,6 @@
     taskSwitching,
     taskRunning,
     comparision,
-    solution
+    solution, 
+    end
 }

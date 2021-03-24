@@ -72,7 +72,7 @@ public class CustomInteractionHand: MonoBehaviour
             _handCopy = _hand;
             if (_handCopy != null)
             {
-                _newPosition = _handCopy.PalmPosition.ToVector3() - _PhysicsHandOffset;
+                _newPosition = _handCopy.PalmPosition.ToVector3() + _PhysicsHandOffset;
                 _newRotation = _handCopy.Rotation.ToQuaternion();
                 _handCopy.SetTransform(_newPosition, _newRotation);
             }

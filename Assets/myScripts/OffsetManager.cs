@@ -54,11 +54,12 @@ public class OffsetManager : MonoBehaviour
         _handRight = handModelright.GetComponent<CustomRiggedHand>();
         _handLeft  = handModelleft.GetComponent<CustomRiggedHand>();
 
+        // move both models to the right
         _handRight._riggedHandOffset = new Vector3(0, 0, _offset);
-        _handLeft._riggedHandOffset = new Vector3(0, 0, - _offset);
+        _handLeft._riggedHandOffset = new Vector3(0, 0, _offset);
 
         // hand copy 
-        _solutionSphere = GameObject.Find("SolutionSphere");
+        _solutionSphere = GameObject.Find("PalmPosition");
         _solutionSphere.SetActive(false); 
     }
 
@@ -68,7 +69,7 @@ public class OffsetManager : MonoBehaviour
 
         // rigged hand 
         _handRight._riggedHandOffset = new Vector3(0, 0, newOffset);
-        _handLeft._riggedHandOffset = new Vector3(0, 0, -newOffset);
+        _handLeft._riggedHandOffset = new Vector3(0, 0, newOffset);
     }
 
 

@@ -7,7 +7,7 @@ using System.Collections;
 
 public class LinkVibrationHandler : MonoBehaviour
 {
-    // private LinkVibrationManager controller;
+    private LinkVibrationManager controller;
     public float waitTime = 1.0f; 
 
 // FIND FINGER INDEX
@@ -24,7 +24,7 @@ public class LinkVibrationHandler : MonoBehaviour
      // EVENTHANDLING
         GameManager.Instance.OnTaskChanged += Vibration_OnTaskChangedHandler;
 
-        // controller = GameObject.Find("VibrationManager").GetComponent<LinkVibrationManager>();
+        controller = GameObject.Find("VibrationManager").GetComponent<LinkVibrationManager>();
         intObj = gameObject.GetComponent<InteractionBehaviour>();
 
         // DEFAULT
@@ -48,8 +48,8 @@ public class LinkVibrationHandler : MonoBehaviour
  // FIND FINGER INDEX
     void FixedUpdate()
     {
-        // if (controller)
-        //{
+        if (controller)
+        {
             foreach (var contactingHand in intObj.contactingControllers
                                              .Query()
                                              .Select(controller => controller.intHand)
@@ -140,12 +140,12 @@ public class LinkVibrationHandler : MonoBehaviour
                         }
                     if (_enableVibration)
                     {
-                        // controller.Vibrate(_fingerIdx, 1000);
+                        controller.VibrateShort(_fingerIdx);
                         Debug.Log("Found collision for fingertip: " + finger.Type);
                     } 
                     }
                 }
-            // }
+            }
         }
         
     }

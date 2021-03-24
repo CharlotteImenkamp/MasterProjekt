@@ -21,8 +21,6 @@ public class ButtonManager : MonoBehaviour
 	public GameObject Buttons_Comparision;
 	public GameObject Buttons_End;
 
-	public GameObject[] CalibrationElements; 
-
 	private GameObject[] _ArrButtons; 
 
 // BUTTONS
@@ -44,12 +42,6 @@ public class ButtonManager : MonoBehaviour
 
 	// Visibility
 		deactivateExept(Buttons_Introduction); 
-
-	// CALIBRATION
-		foreach(GameObject obj in CalibrationElements)
-        {
-			obj.SetActive(false);
-        }
 	}
 
 
@@ -72,11 +64,6 @@ public class ButtonManager : MonoBehaviour
 		{
 			deactivateExept(Buttons_Numbers);
 
-		// CALIBRATION
-			foreach (GameObject obj in CalibrationElements)
-			{
-				obj.SetActive(false);
-			}
 		}
 
 		if (newState == gameState.solution)

@@ -12,6 +12,7 @@ TagManager:
   - UISign
   - UIImage
   - UIEndText
+  - UISkala
   layers:
   - Default
   - TransparentFX

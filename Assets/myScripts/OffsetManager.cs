@@ -31,7 +31,7 @@ public class OffsetManager : MonoBehaviour
     private CustomRiggedHand _handRight;
     private CustomRiggedHand _handLeft;
 
-    private GameObject _solutionSphere; 
+    public GameObject _solutionSphere; 
 
     void Start()
     {
@@ -59,7 +59,6 @@ public class OffsetManager : MonoBehaviour
         _handLeft._riggedHandOffset = new Vector3(0, 0, _offset);
 
         // hand copy 
-        _solutionSphere = GameObject.Find("PalmPosition");
         _solutionSphere.SetActive(false); 
     }
 
@@ -92,12 +91,10 @@ public class OffsetManager : MonoBehaviour
         {
             if (_handRight)
             {
-                _solutionSphere.transform.position = _handRight.GetPalmPosition() - _handRight._riggedHandOffset;
                 _solutionSphere.SetActive(true);
             }
             else if (_handLeft)
             {
-                _solutionSphere.transform.position = _handLeft.GetPalmPosition() - _handLeft._riggedHandOffset;
                 _solutionSphere.SetActive(true);
             }
             else
@@ -111,6 +108,18 @@ public class OffsetManager : MonoBehaviour
             _handmodel.SetActive(true);
 
             _solutionSphere.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (_solutionSphere && _handRight.isActiveAndEnabled)
+        {
+            _solutionSphere.transform.position = _handRight.GetPalmPosition() - _handRight._riggedHandOffset;
+        }
+        else if(_solutionSphere &&_handLeft.isActiveAndEnabled) 
+        {
+            _solutionSphere.transform.position = _handLeft.GetPalmPosition() - _handLeft._riggedHandOffset;
         }
     }
 

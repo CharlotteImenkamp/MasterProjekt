@@ -48,7 +48,7 @@ public class CustomInteractionHand: MonoBehaviour
         _PhysicsHandOffset = new Vector3(0,0, _offManager.offset);
 
     // physics hand
-        _intManager.handAccessorFunc = (frame) => TransformLeapHandModel(frame);        //****  muss ich das hier nochmal machen?
+        _intManager.handAccessorFunc = (frame) => TransformLeapHandModel(frame);       
     }
 
     Hand TransformLeapHandModel(Frame frame)

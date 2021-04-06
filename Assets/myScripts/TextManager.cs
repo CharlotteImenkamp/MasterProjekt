@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TextManager : MonoBehaviour
 {
-    private GameObject[] m_ArrTextObjects;
-    private GameObject[] m_ArrImageObjects;
+    public GameObject[] m_ArrTextObjects;
+    public GameObject[] m_ArrImageObjects;
     private GameObject[] m_ArrEndTextObjects;
 
     private int m_textIndex;
@@ -17,8 +17,6 @@ public class TextManager : MonoBehaviour
         GameManager.Instance.OnTaskChanged += ImageText_OnTaskChangedHandler;
   
     // FIND OBJECTS
-        m_ArrTextObjects = GameObject.FindGameObjectsWithTag("UIText");
-        m_ArrImageObjects = GameObject.FindGameObjectsWithTag("UIImage");
         m_ArrEndTextObjects = GameObject.FindGameObjectsWithTag("UIEndText"); 
 
     // DEFAULT VALUES

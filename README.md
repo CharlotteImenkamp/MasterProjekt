@@ -1,4 +1,4 @@
-# MasterProjekt
+# Proprioception
 
 Simultaneous tactile stimulation of both a rubber hand (rubber hand illusion, RHI) in the field of vision, and the hidden, real hand evoke a sense of body belonging of the artificial hand in the subjects. In connection with this, another further phenomenon was observed: The subjects perceive the position of their hand as shifted towards the artificial hand, which describes proprioceptive drift.
 
